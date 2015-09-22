@@ -1,0 +1,38 @@
+#title {
+	margin-left: 5px;
+	padding-top: 5px;
+	font-size: 50px;
+	font-family: ThreeDShadow;
+	color: red;
+}
+
+a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.left {
+	margin-top: 14px;
+	padding-bottom: 10px;
+	padding-left: 4px;
+	float: left;
+}
+
+
+#footer {
+	margin-top:10px;
+	position: relative;
+	height: 50px;
+	background-color: #668284;
+	clear: both;
+	font-family: Verdana, sans-serif;
+	font-size: 14px;
+	text-align: center;
+	color: #ffffff;
+}
+
+#subtitle{
+	font-size: 20px;
+	text-decoration: italic;
+	color: black;
+}
