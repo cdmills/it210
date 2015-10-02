@@ -1,31 +1,38 @@
 //This function stores the endorsements in JSON format in local storage
 function onClick()
 {
-var json=[];
+	//checks to make sure there is actually keys to input
+	if((localStorage.getItem("name") != null) && (localStorage.getItem("date") != null))
+	{
+		//puts local storage into json array if present and appends new data
+		var json=[];
+		if(localStorage.myjson)
+		{
+			json=JSON.parse(localStorage.myjson);
+		}
+		var name= document.getElementById("name").value;
+		var date= document.getElementById("date").value;
+		json.push({"name" : name, "date" : date});
 
-if(localStorage.myjson)
-{
-json=JSON.parse(localStorage.myjson);
+		//resets local storage
+		localStorage.myjson=JSON.stringify(json);
+		localStorage.removeItem("name");
+		localStorage.removeItem("date");
+		document.getElementById("endorsements").reset();
 }
-
-var name= document.getElementById("name").value;
-var date= document.getElementById("date").value;
-json.push({"name" : name, "date" : date});
-
-localStorage.myjson=JSON.stringify(json);
 }
 
 //This autopopulates the form
 function autoPopulate()
 {
-if(localStorage.name)
-{
-document.getElementById("name").value=localStorage.name;
-}
-if(localStorage.date)
-{
-document.getElementById("date").value=localStorage.date;
-}
+	if(localStorage.name)
+	{
+		document.getElementById("name").value=localStorage.name;
+	}
+	if(localStorage.date)
+	{
+		document.getElementById("date").value=localStorage.date;
+	}
 }
 
 //Updates local storage onkeyup
@@ -63,16 +70,14 @@ function sortName()
 	if(localStorage.myjson)
 		{
 			json=JSON.parse(localStorage.myjson);
+
+			json =sortByKey(json,"name");
+
+			//Saves to local storage
+			localStorage.myjson=JSON.stringify(json);
+			//prints updated info
+			testJSON();
 		}
-
-	//calling the sortByKey function 
-	json =sortByKey(json,"name");
-
-	//Saves it to the local storage
-	localStorage.myjson=JSON.stringify(json);
-
-	//to print the new list
-	testJSON();
 }
 
 function sortDate()
@@ -81,15 +86,40 @@ function sortDate()
 	if(localStorage.myjson)
 	{
 		json=JSON.parse(localStorage.myjson);
+		json=sortByKey(json,"date");
+
+		//Saves to local storage
+		localStorage.myjson=JSON.stringify(json);
+		//prints updated info
+		testJSON();
 	}
 
-	//calling the sortByKey function 
-	json =sortByKey(json,"date");
+}
 
-	//Saves it to the local storage
-	localStorage.myjson=JSON.stringify(json);
+function loadJSON()
+{
+	$.getJSON("js/test.json", function(data) 
+	{ 
+		var json=[];
+		$.each(data, function(key,val)
+		{
+			var name = key;
+			var date = val;
+			json.push({"name" : name, "date" : date});
+		})
+		localStorage.myjson=JSON.stringify(json);
+	})
+}
 
-	//to print the new list
-	testJSON();
-
+function gup( name )
+{
+  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+  var regexS = "[\\?&]"+name+"=([^&#]*)";
+  var regex = new RegExp( regexS );
+  var results = regex.exec( window.location.href );
+  if( results == null )
+    return "";
+  else
+    return results[1];
+console.log("HELLO");
 }
